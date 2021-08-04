@@ -5,12 +5,12 @@
       <h3>免责声明：该页面由客户进行确认点击</h3>
       <h3>若出现问题本公司概不负责！！！！！</h3>
       <h4>请输入买家和卖家id</h4>
-      <el-form ref="form" label-width="80px">
-      <el-form-item label="买家ICid">
-        <el-input v-model="cid1"></el-input>
+      <el-form ref="form" label-width="100px">
+      <el-form-item label="买家id">
+        <el-input v-model="cid"></el-input>
       </el-form-item>
-      <el-form-item label="卖家ICid">
-        <el-input v-model="cid2"></el-input>
+      <el-form-item label="货物订单id">
+        <el-input v-model="gtid"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" :disabled="disable" @click="onSubmit"
@@ -26,12 +26,13 @@ import { updategt} from "@/api/return";
 export default {
   data() {
       return{
-          cid1:"",
-          cid2:""
+          cid:"",
+          gtid:""
       }
-  }
+  },
   methods: {
       onSubmit(){
-          this.updategt(cid1,cid2)
+          this.updategt(cid,gtid)
       }
   }
+}
