@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="coustomer" label-width="80px">
-      <el-form-item label="客户id">
-        <el-input v-model="coustomer.cid"></el-input>
-      </el-form-item>
       <el-form-item label="客户姓名">
         <el-input v-model="coustomer.name"></el-input>
       </el-form-item>
