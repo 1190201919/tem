@@ -54,9 +54,8 @@ export function deleteuser(id) {
 
 export function getgt(id) {
     return request({
-      url: '/return/add',
-      method: 'patch',
-      params: { id }
+      url: '/api/goodstickets/'+id,
+      method: 'get',
     })
   }
 
@@ -99,5 +98,12 @@ export function addot(outticket) {
       url: '/teacher/update',
       method: 'post',
       params: { cid1, cid2}
+    })
+  }
+
+  export function getgid(cid) {
+    return request({
+      url: '/api/goodstickets/cid'+cid,
+      method: 'get',
     })
   }

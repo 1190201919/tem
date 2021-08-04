@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="outticket" label-width="80px">
-      <el-form-item label="客户id">
+      <el-form-item label="ICid">
         <el-input v-model="icid"></el-input>
       </el-form-item>
       <el-form-item label="其他价格">
@@ -10,6 +10,33 @@
       <el-form-item>
         <el-button type="primary" :disabled="disable" @click="onSubmit"
           >确认</el-button
+        >
+      </el-form-item>
+    </el-form>
+    <h3>该id下的货物id</h3>
+    <el-table
+    :data="gtids"
+    style="width: 100%">
+    <el-table-column
+      label="序号"
+      width="180">
+      <template slot-scope="scope">
+        {{scope.$index+1}}
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="货物id"
+      width="180" prop="gtid">
+    </el-table-column>
+    </el-table>
+    <h3>请输入你所要查询的货物id</h3>
+    <el-form ref="form"  label-width="80px">
+      <el-form-item label="订单id">
+        <el-input v-model="gtid"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" :disabled="disable" @click="onSubmit1"
+          >拉取明细</el-button
         >
       </el-form-item>
     </el-form>
@@ -40,16 +67,17 @@
         <el-input v-model="tableData.info" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" :disabled="disable" @click="onSubmit"
+        <el-button type="primary" :disabled="disable" @click="onSubmit2"
           >上传出库单</el-button
         >
       </el-form-item>
+      <h3>注意：上传的为明细表显示的货物id！</h3>
     </el-form>
   </div>
 </template>
 
 <script>
-import { addot, getgt, getcid, getgid} from "@/api/return";//需要修改
+import { addot, getgt, getcid, getgid,getcous} from "@/api/return";//需要修改
 export default {
   data() {
     return {
@@ -73,23 +101,23 @@ export default {
       },
       icid:"",
       cid:"",
+      gtid:"",
+      gtids:[],
       disable: false,
     };
   },
 
-  created() {
-    if (this.$route.params && this.$route.params.id) {
-      this.getInfo(this.$route.params.id);//可能需要修改
-    }
-  },
   methods: {
     //不知会不会按顺序，看测试结果修改
     onSubmit() {
       this.localgetcid(this.icid) 
-      this.getInfo(this.cid)
-      this.outticket.gtid = this.tableData.gid
+      this.localgetgid(this.cid)
     },
     onSubmit1() {
+      this.outticket.gtid = this.gtid
+      this.getInfo(this.gtid)
+    },
+    onSubmit2() {
       this.addInfo(this.outticket)
     },
     //上传出库单
@@ -103,14 +131,19 @@ export default {
     },
     //获得货物明细简表
     //查询goodsticket库
-    getInfo(cid) {
-      getgt(cid).then((response) => {
-        this.tableData = response.data.teacher;//需要修改
+    getInfo(gtid) {
+      getgt(gtid).then((response) => {
+        this.tableData = response.data;//需要修改
       });
     },
     localgetcid(icid) {
-      getgt(icid).then((response) => {
+      getcous(icid).then((response) => {
         this.cid = response.data.cid;//需要修改
+      });
+    },
+    localgetgid(cid) {
+      getgid(cid).then((response) => {
+        this.gtids = response.data;//需要修改
       });
     },
   },
