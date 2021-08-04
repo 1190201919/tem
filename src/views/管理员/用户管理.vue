@@ -1,20 +1,17 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="user" label-width="80px">
-      <el-form-item label="用户id">
-        <el-input v-model="user.id"></el-input>
-      </el-form-item>
       <el-form-item label="用户名">
         <el-input v-model="user.name"></el-input>
       </el-form-item>
       <el-form-item label="账号">
-        <el-input v-model="user.accout"></el-input>
+        <el-input v-model="user.account"></el-input>
       </el-form-item>
       <el-form-item label="密码">
         <el-input placeholder="请输入密码" v-model="user.pwd" show-password></el-input>
       </el-form-item>
       <el-form-item label="权限">
-        <el-input-number v-model="user.group" controls-position="right" :min="0" :max="5"></el-input-number>
+        <el-input-number v-model="user.grp" controls-position="right" :min="0" :max="5"></el-input-number>
       </el-form-item>
       <el-form-item label="性别">
         <el-input-number v-model="user.gender" controls-position="right" :min="0" :max="2"></el-input-number>
@@ -32,7 +29,7 @@
       </el-form-item>
     </el-form>
     <el-table
-    :data="coustomers"
+    :data="users"
     style="width: 100%">
     <el-table-column
       label="序号"
@@ -42,20 +39,16 @@
       </template>
     </el-table-column>
     <el-table-column
-      label="用户id"
-      width="180" prop="id">
-    </el-table-column>
-    <el-table-column
       label="用户名"
       width="180" prop="name">
     </el-table-column>
         <el-table-column
       label="权限"
-      width="180" prop="group">
+      width="180" prop="grp">
     </el-table-column>
     <el-table-column
       label="状态"
-      width="180" prop="status">
+      width="180" prop="state">
     </el-table-column>
     <el-table-column
       label="备注信息"
@@ -80,29 +73,29 @@ export default {
   data() {
     return {
       user: {
-        id: "",
-        name: "",
-        accout: "",
-        pwd: "",
-        group: "",
-        gender: "",
-        state: "",
-        info:"",
+        name: '',
+        account: '',
+        pwd: '',
+        grp: '',
+        gender: '',
+        state: '',
+        info:'',
       },
       disable: false,
-      users:[]
+      users:[],
     };
   },
   created(){
-      this.getUsers()
+      this.getUsers();
   },
   methods: {
     onSubmit() {
       this.addInfo(this.user);
     },
     addInfo(user) {
-      addcous(user).then((response) => {
+      adduser(user).then((response) => {
         // 提示信息
+        this.getUsers();
         this.$message({
           type: "success",
           message: "添加成功!",
@@ -111,7 +104,7 @@ export default {
     },
     getUsers(){
         getalluser().then(response => {
-         this.users = response.data.items//可能需要修改
+         this.users = response.data//可能需要修改
        })
     },
     handleDelete(id){
@@ -122,10 +115,10 @@ export default {
           type: 'warning'
           // 如果点击了确定则调用then
         }).then(() => {
-          // 调用api中删除讲师的方法
-          deletecous(id).then(response=>{
-            // 删除成功后，重新加载讲师列表
-            this.getCoustomers()
+          // 调用api中删除
+          deleteuser(id).then(response=>{
+            this.getUsers();
+            // 删除成功后，重新加载
             this.$message({
               type: 'success',
               message: '删除成功!'

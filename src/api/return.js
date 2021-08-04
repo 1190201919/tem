@@ -29,7 +29,7 @@ export function deletecous(id) {
 //上传用户
 export function adduser(user) {
     return request({
-        url: '/return/add',
+        url: '/api/users',
         method: 'post',
         data: user
     })
@@ -38,7 +38,7 @@ export function adduser(user) {
 //获取所有用户
 export function getalluser() {
     return request({
-        url: '/return/add',
+        url: '/api/users',
         method: 'get',
     })
 }
@@ -46,9 +46,8 @@ export function getalluser() {
 //删除用户
 export function deleteuser(id) {
     return request({
-        url: '/return/add',
-        method: 'get',
-        params: { id }
+        url: '/api/users/'+id,
+        method: 'delete',
     })
 }
 
@@ -85,25 +84,25 @@ export function addot(outticket) {
   }
 
   //用cid访问后端删除goodsticket该行数据库中的数据
-  export function deletegt(cid) {
+  export function deletegt(gtid) {
     return request({
-      url: '/api/customers/'+cid,
+      url: '/api/goodstickets/'+gtid,
       method: 'delete',
     })
   }
 
   //更新gt表cid,为了简便，若需要也可传入全部数据
-  export function update(cid1,cid2) {
+  export function updategt(cid,gtid) {
     return request({
-      url: '/teacher/update',
-      method: 'post',
-      params: { cid1, cid2}
+      url: '/api/goodstickets/'+gtid,
+      method: 'patch',
+      data:cid
     })
   }
 
   export function getgid(cid) {
     return request({
-      url: '/api/goodstickets/cid'+cid,
+      url: '/api/goodstickets/cid/'+cid,
       method: 'get',
     })
   }

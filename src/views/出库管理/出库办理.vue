@@ -11,6 +11,9 @@
         <el-button type="primary" :disabled="disable" @click="onSubmit"
           >确认</el-button
         >
+         <el-button type="primary" :disabled="disable" @click="onSubmit3"
+          >查看该id下货物</el-button
+        >
       </el-form-item>
     </el-form>
     <h3>该id下的货物id</h3>
@@ -110,8 +113,7 @@ export default {
   methods: {
     //不知会不会按顺序，看测试结果修改
     onSubmit() {
-      this.localgetcid(this.icid) 
-      this.localgetgid(this.cid)
+      this.localgetcid(this.icid);
     },
     onSubmit1() {
       this.outticket.gtid = this.gtid
@@ -119,6 +121,9 @@ export default {
     },
     onSubmit2() {
       this.addInfo(this.outticket)
+    },
+    onSubmit3() {
+      this.localgetgid(this.cid);
     },
     //上传出库单
     addInfo(outticket) {
@@ -135,7 +140,7 @@ export default {
       getgt(gtid).then((response) => {
         this.tableData = response.data;//需要修改
       });
-    },
+    }, 
     localgetcid(icid) {
       getcous(icid).then((response) => {
         this.cid = response.data.cid;//需要修改

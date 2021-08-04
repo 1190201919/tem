@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="outticket" label-width="80px">
-      <el-form-item label="客户id">
-        <el-input v-model="cid"></el-input>
+      <el-form-item label="货物id">
+        <el-input v-model="gtid"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" :disabled="disable" @click="onSubmit"
@@ -38,7 +38,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" :disabled="disable" @click="onSubmit1"
-          >确认</el-button
+          >确认出库</el-button
         >
       </el-form-item>
     </el-form>
@@ -63,21 +63,23 @@ export default {
         info: "",
         plate: "",
       },
+      gtid:"",
       disable: false,
     };
   },
   methods: {
     onSubmit() {
-      this.getInfo(this.cid);
+      this.getInfo(this.gtid);
     },
     onSubmit1() {
-      this.deletegt(this.cid);
+      deletegt(this.gtid);
+      alert('出库成功');
     },
     //获得货物明细简表
     //查询goodsticket库
-    getInfo(cid) {
-      getgt(cid).then((response) => {
-        this.tableData = response.data.teacher;//需要修改
+    getInfo(gtid) {
+      getgt(gtid).then((response) => {
+        this.tableData = response.data;//需要修改
       });
     },
   },
